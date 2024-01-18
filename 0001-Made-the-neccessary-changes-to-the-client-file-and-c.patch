@@ -1,0 +1,244 @@
+From 05856c8925420431e3e0f0b25286454af5a603e1 Mon Sep 17 00:00:00 2001
+From: Ifeanyi Osuji <oindubuisi@gmail.com>
+Date: Thu, 18 Jan 2024 16:55:06 +0100
+Subject: [PATCH] Made the neccessary changes to the client file and carried
+ unit test
+
+---
+ .idea/.gitignore                   |   3 ++
+ .idea/forage-jpmc-swe-task-1.iml   |   9 ++++++
+ .idea/misc.xml                     |   9 ++++++
+ .idea/modules.xml                  |   8 ++++++
+ .idea/vcs.xml                      |   6 ++++
+ 0001-Re-add-sample-unit-test.patch |  44 +++++++++++++++++++++++++++++
+ __pycache__/client3.cpython-38.pyc | Bin 0 -> 1081 bytes
+ client3.py                         |   8 ++++--
+ client_test.py                     |  14 +++++++--
+ 9 files changed, 97 insertions(+), 4 deletions(-)
+ create mode 100644 .idea/.gitignore
+ create mode 100644 .idea/forage-jpmc-swe-task-1.iml
+ create mode 100644 .idea/misc.xml
+ create mode 100644 .idea/modules.xml
+ create mode 100644 .idea/vcs.xml
+ create mode 100644 0001-Re-add-sample-unit-test.patch
+ create mode 100644 __pycache__/client3.cpython-38.pyc
+
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+index 0000000..26d3352
+--- /dev/null
++++ b/.idea/.gitignore
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+diff --git a/.idea/forage-jpmc-swe-task-1.iml b/.idea/forage-jpmc-swe-task-1.iml
+new file mode 100644
+index 0000000..d6ebd48
+--- /dev/null
++++ b/.idea/forage-jpmc-swe-task-1.iml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+index 0000000..ad74133
+--- /dev/null
++++ b/.idea/misc.xml
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Black">
++    <option name="sdkName" value="Python 3.8 (2)" />
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="Python 3.8 (2)" project-jdk-type="Python SDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+index 0000000..973696f
+--- /dev/null
++++ b/.idea/modules.xml
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/forage-jpmc-swe-task-1.iml" filepath="$PROJECT_DIR$/.idea/forage-jpmc-swe-task-1.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+index 0000000..35eb1dd
+--- /dev/null
++++ b/.idea/vcs.xml
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/0001-Re-add-sample-unit-test.patch b/0001-Re-add-sample-unit-test.patch
+new file mode 100644
+index 0000000..ccaf6b0
+--- /dev/null
++++ b/0001-Re-add-sample-unit-test.patch
+@@ -0,0 +1,44 @@
++From 879221fec2b863d37d5b493f02a530a8098ef6ef Mon Sep 17 00:00:00 2001
++From: Joe Ferrer <joe@theforage.com>
++Date: Wed, 1 Mar 2023 00:11:51 +1100
++Subject: [PATCH] Re-add sample unit test
++
++---
++ client_test.py | 25 +++++++++++++++++++++++++
++ 1 file changed, 25 insertions(+)
++ create mode 100644 client_test.py
++
++diff --git a/client_test.py b/client_test.py
++new file mode 100644
++index 0000000..af2bf26
++--- /dev/null
+++++ b/client_test.py
++@@ -0,0 +1,25 @@
+++import unittest
+++from client3 import getDataPoint
+++
+++class ClientTest(unittest.TestCase):
+++  def test_getDataPoint_calculatePrice(self):
+++    quotes = [
+++      {'top_ask': {'price': 121.2, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 120.48, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
+++      {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+++    ]
+++    """ ------------ Add the assertion below ------------ """
+++
+++  def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
+++    quotes = [
+++      {'top_ask': {'price': 119.2, 'size': 36}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 120.48, 'size': 109}, 'id': '0.109974697771', 'stock': 'ABC'},
+++      {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+++    ]
+++    """ ------------ Add the assertion below ------------ """
+++
+++
+++  """ ------------ Add more unit tests ------------ """
+++
+++
+++
+++if __name__ == '__main__':
+++    unittest.main()
++-- 
++2.25.1
++
+diff --git a/__pycache__/client3.cpython-38.pyc b/__pycache__/client3.cpython-38.pyc
+new file mode 100644
+index 0000000000000000000000000000000000000000..adb3a89306a990d7e84a1f4888d1d798036a913a
+GIT binary patch
+literal 1081
+zcmYjP&2JMs5V!X$n>K~guTUW&^CSd8loW9QRXjkVh+D;nI6Uh;t=xFhZoApt+7758
+zJ%#swq(}Y%4*V&;a^lX33yht%!q$vu#<Sz!{$}1SEX)yHzn*-C|C@w-bIzX&W8@i%
+z{)$QxNejYfC*{=p0S{%sBN_5oMl$|Hcp?+oz_S6VOb-L~1)4Ai@q|w3Hu<mS^FXF8
+z2oDyfmmr#620Epu<dmM$>7qONm7MS;xPrNxd>Im0p3r|IzQR}e8gD}zmSE*Efvd6!
+zE3gV{(C$ZTWI`!9sxdkT4a{jzg0tARq;E-Q{yX9)JEI%>#?)KgZc+6_v0rJk^=R|a
+zX7^|a>iB6c|NeNA|Dc5QP%c)CR)q2#ML$C|MjqD52{q0N)`<+)@%@v)`_Y9Tj)QU7
+zCNjQ8PNFe&-Z<(<h$b05WUo{uhdp4TD45v?Rsu+n?7b+4pqZ)I9+aSj!3-va5p|W9
+zhS^w~s&~j6rmC~uT-vx+c@Jj3(1+gx#MhxV?iZCXo!G`l!^(hiVcWzHGM{gom^(97
+zh*zJ9a-II!?e13t=;nP8$9dW9S4!-`#z8&kZRiiMVeqSs``uoVLunq|tB-AK56m{A
+zd*#t#3GL@8Oz9%-7FF{Y>$%s@m$RLCHdoLXQ%P}3S~7Txe2(cgf((VDzt~GK3<=09
+zR`r>Ooe3sNd1mi2<+`-vk#_>#I7>M<cKyXnIZ!r5tZ!VsJLu^I6+xU4RV{y;Wdo6y
+zSvI=$+EFIiP0fU1w~@51oBA%pfA^<<2CdF0_0=%1vu>jUU6nRbh_4#hOG8x@`R+Xh
+zI9b}*Wajhu^}82u{;_n&^K$WUDF%>bHp;P6HpUuzU}<J!?4i`QabBf?RjL~B8Eniz
+z7#k@N(k8yenkOEaR_@Py!&SpssZ*}WepX8J2Q9AWYR1ju0ght<PgXIcucJyS?l8ig
+S&ZW&XSfnhBFt&)Y7W@V#z7VGX
+
+literal 0
+HcmV?d00001
+
+diff --git a/client3.py b/client3.py
+index 3fc09b7..6894cc8 100644
+--- a/client3.py
++++ b/client3.py
+@@ -35,14 +35,16 @@ def getDataPoint(quote):
+     stock = quote['stock']
+     bid_price = float(quote['top_bid']['price'])
+     ask_price = float(quote['top_ask']['price'])
+-    price = bid_price
++    price = (bid_price + ask_price) / 2
+     return stock, bid_price, ask_price, price
+ 
+ 
+ def getRatio(price_a, price_b):
+     """ Get ratio of price_a and price_b """
+     """ ------------- Update this function ------------- """
+-    return 1
++    if price_b == 0:
++        return
++    return price_a / price_b
+ 
+ 
+ # Main
+@@ -52,8 +54,10 @@ if __name__ == "__main__":
+         quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
+ 
+         """ ----------- Update to get the ratio --------------- """
++        prices = {}
+         for quote in quotes:
+             stock, bid_price, ask_price, price = getDataPoint(quote)
++            prices[stock] = price
+             print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
+ 
+         print("Ratio %s" % getRatio(price, price))
+diff --git a/client_test.py b/client_test.py
+index af2bf26..6a4e8bb 100644
+--- a/client_test.py
++++ b/client_test.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from client3 import getDataPoint
++from client3 import getDataPoint, getRatio
+ 
+ class ClientTest(unittest.TestCase):
+   def test_getDataPoint_calculatePrice(self):
+@@ -8,6 +8,8 @@ class ClientTest(unittest.TestCase):
+       {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+     ]
+     """ ------------ Add the assertion below ------------ """
++    for quote in quotes:
++      self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'], (quote['top_bid']['price']+quote['top_ask']['price'])/2))
+ 
+   def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
+     quotes = [
+@@ -15,9 +17,17 @@ class ClientTest(unittest.TestCase):
+       {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+     ]
+     """ ------------ Add the assertion below ------------ """
+-
++    for quote in quotes:
++      self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'], (quote['top_bid']['price']+quote['top_ask']['price'])/2))
+ 
+   """ ------------ Add more unit tests ------------ """
++  def test_getRatio_whenPriceBIsZero(self):
++    ratio = getRatio(120.48, 0)
++    self.assertIsNone(ratio)
++
++  def test_getRatio_whenPriceAIsZero(self):
++    ratio = getRatio(0, 120.48)
++    self.assertEquals(ratio, 0)
+ 
+ 
+ 
+-- 
+2.25.1
+
